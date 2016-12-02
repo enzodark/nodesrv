@@ -2,7 +2,7 @@
 //ini_set('max_execution_time', 300);
 
 //Inicializimi
-$url = "http://192.168.1.30:3050/artikujPost" ;
+$url = "http://80.78.76.160:3050/artikujPost" ;
 //$url = "http://192.168.1.30:3050/artikujPost" ;
 
 $ch = curl_init($url);
