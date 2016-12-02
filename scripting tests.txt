@@ -1,0 +1,64 @@
+docking station,*
+increase 1 pc parameters*
+
+mouse/piece
+
+office 2013
+autocad lower version than 2017
+
+
+
+
+nodeserver 192.168.1.30:3050
+test enviroment 192.168.1.30:8081
+
+
+<?php
+
+// you can also test with this
+// but, with postman it'll be quicker
+
+$username = 'username';
+$password = 'password';
+
+$url = 'http://192.168.1.30:3050';
+
+$options = array(
+  'http'=>array(
+    'method'=>"GET",
+    'header' => "Authorization: Basic " . base64_encode("$username:$password")                 
+  )
+);
+
+$context = stream_context_create($options);
+
+$response = file_get_contents($url, false, $context);
+
+print($response);
+?>
+
+
+// ------------
+// or, you can use a helper lib like guzzle
+$client = new GuzzleHttp\Client();
+$res = $client->request(
+  'GET', 
+  'https://api.github.com/user', [
+    'auth' => ['user', 'pass']
+  ]
+);
+echo $res->getStatusCode();
+// "200"
+echo $res->getHeader('content-type');
+// 'application/json; charset=utf8'
+echo $res->getBody();
+// {"type":"User"...'
+
+// Send an asynchronous request.
+$request = new \GuzzleHttp\Psr7\Request('GET', 'http://httpbin.org');
+$promise = $client->sendAsync($request)->then(function ($response) {
+    echo 'I completed! ' . $response->getBody();
+});
+$promise->wait();
+
+?>
