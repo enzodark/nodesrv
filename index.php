@@ -2,7 +2,7 @@
 //ini_set('max_execution_time', 300);
 
 //Inicializimi
-$url = "http://80.78.76.160:3050/artikujPost" ;
+$url = "http://80.78.76.160:3050/entitetePost" ;
 //$url = "http://192.168.1.30:3050/artikujPost" ;
 
 $ch = curl_init($url);
@@ -18,16 +18,16 @@ $headr[] = 'Accept: application/json';
 
 //RawData To Send
 //$rawData ='{"art":[{"MARRE":"1\\/1\\/1990","NRSEL":15,"NRCHUNK":0,"PERDORUES":""}]}';
-$rawData2 ='{"art":[{"MARRE":"1\\/1\\/2015","NRSEL":100,"NRCHUNK":0,"PERDORUES":"",""}]}';
-//$rawData3='{"artikujGjendje":[{"MARRE":"1\\/1\\/2015","NRSEL":100,"NRCHUNK":0,"PERDORUES":"","MAGKODI":"","KODARTIKULLI":"","ARTBARKOD":"","DETAJIM1":"","DETAJIM2":""}]}';
-//$rawData4 ='{"cmime":[{"MARRE":"1\\/1\\/2015","NRSEL":100,"NRCHUNK":0,"PERDORUES":"",""}]}';
+//$rawData2 ='{"art":[{"MARRE":"1\\/1\\/2015","NRSEL":100,"NRCHUNK":0,"PERDORUES":"",""}]}';
+$rawData3='{"artikujGjendje":[{"MARRE":"1\\/1\\/2015","NRSEL":100,"NRCHUNK":0,"PERDORUES":"","MAGKODI":"","KODARTIKULLI":"","ARTBARKOD":"","DETAJIM1":"","DETAJIM2":""}]}';
+//$rawData4 ='{"artikujGjendje":[{"MARRE":"1/1/1900","NRSEL":0,"NRCHUNK":0,"PERDORUES":""}]}';
 
 
 //Settings cURL Option
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
 curl_setopt($ch, CURLOPT_POST,true);
 //curl_setopt($ch, CURLOPT_POSTFIELDS, $rawData);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $rawData2);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $rawData3);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 //Ekzektuimi
@@ -42,7 +42,7 @@ $obj = json_decode($result,true);
 echo "<pre>";
 print_r($obj);
 echo "</pre>";
-
+//
 //foreach($obj as $lista){
 //    foreach()
 //}
