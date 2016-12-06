@@ -26,9 +26,8 @@ $headr[] = 'Accept: application/json';
 
 //RAWDATA TO SEND
 //$rawData ='{"art":[{"MARRE":"1\\/1\\/1990","NRSEL":15,"NRCHUNK":0,"PERDORUES":""}]}';
-$rawData2 ='{"art":[{"MARRE":"1\\/1\\/2015","NRSEL":100,"NRCHUNK":0,"PERDORUES":"",""}]}';
+//$rawData2 ='{"art":[{"MARRE":"1\\/1\\/2015","NRSEL":100,"NRCHUNK":0,"PERDORUES":"",""}]}';
 $rawData3='{"artikujGjendje":[{"MARRE":"1\\/1\\/2015","NRSEL":100,"NRCHUNK":0,"PERDORUES":"","MAGKODI":"","KODARTIKULLI":"","ARTBARKOD":"","DETAJIM1":"","DETAJIM2":""}]}';
-//$rawData4 ='{"artikujGjendje":[{"MARRE":"1/1/1900","NRSEL":0,"NRCHUNK":0,"PERDORUES":""}]}';
 
 
 //Settings cURL Option
@@ -37,17 +36,6 @@ curl_setopt($ch, CURLOPT_POST,true);
 //curl_setopt($ch, CURLOPT_POSTFIELDS, $rawData2);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $rawData3);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-
-
-//Bugs Reporting
-$query = "INSERT INTO dataTable (KODARTIKULLI,PERSHKRIMARTIKULLI,PERSHKRIMIANGARTIKULLI,KODNJESIA1,KODNJESIA2,KOEFICENTARTIKULLI,MAGAZINA,AKTIV,
-KLASA,GRUPI,NENGRUPI,TVSHKODI,VENDODHJEARTIKULLI,PERSHKRIMI,IMAZH,VLERATVSH,KODIDOGANORARTIKULLI,ARTREF,KODIFIKIMARTIKULLI,KODIFIKIMARTIKULLI2,
-DTMODIFIKIM,IDSTATUSDOK,PERPESHORE,LLOJGARANCIA,GARANCIA,) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-$stmt = $link->prepare($query);
-
- $stmt->bind_param('ssssssssssssssssssssssss', $KODARTIKULLI,$PERSHKRIMARTIKULLI,$PERSHKRIMIANGARTIKULLI,$KODNJESIA1,$KODNJESIA2,$KOEFICENTARTIKULLI,$MAGAZINA,$AKTIV,$KLASA,$GRUPI,$NENGRUPI,$TVSHKODI,$VENDODHJEARTIKULLI,$PERSHKRIMI,$IMAZH,$VLERATVSH,$KODIDOGANORARTIKULLI,$ARTREF,$KODIFIKIMARTIKULLI,$KODIFIKIMARTIKULLI2,$DTMODIFIKIM,$IDSTATUSDOK,$PERPESHORE,$LLOJGARANCIA,$GARANCIA);
 
 
 //Ekzektuimi
@@ -60,14 +48,16 @@ echo "<pre>";
 print_r($obj);
 echo "</pre>";
 
-//Adding the objects to database - Not tested
-foreach($obj['entiteteTeReja']['artRi'] as $lista){
-    foreach($lista as $x => $x_value) {
-
-    $stmt->execute();
-}}
+//$x => $x_value
 
 //Mbyllja
 curl_close($ch);
-
+//Adding the objects to database - Not tested
+//foreach($obj['entiteteTeReja']['gjendjeArtikulli'] as $lista){
+//    foreach($lista as $x=> $x_value) {
+//
+//
+//$res = mysqli_query($query,$link);
+//
+//}}
 ?>
