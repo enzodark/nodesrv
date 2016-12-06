@@ -47,3 +47,19 @@ $promise = $client->sendAsync($request)->then(function ($response) {
 $promise->wait();
 
 ?>
+
+//this thing
+        
+       $stmt->bindParam(1, $x['KODARTIKULLI']);
+        $stmt->bindParam(2, $x['PERSHKRIMARTIKULLI']);
+        $stmt->bindParam(3, $x['BARKOD']);
+        $stmt->bindParam(4, $x['KODNJESIA1']);
+        $stmt->bindParam(5, $x['KODI']);
+        $stmt->bindParam(6, $x['gjendje']);
+        $stmt->bindParam(7, $x['DTMODIFIKIM']);
+        $stmt->bindParam(8, $x['cmimibaze']);
+        $stmt->bindParam(9, $x['DETAJIM1']);
+        $stmt->bindParam(10,$x['DETAJIM2']);
+        
+        $stmt->execute();
+
