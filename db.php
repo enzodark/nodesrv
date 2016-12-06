@@ -10,11 +10,6 @@ if (!$link) {
 echo 'Connected successfully';
 
 
-if($db){
-    echo "Result OK";
-}
-
-
 ?>
 
 
