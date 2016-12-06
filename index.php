@@ -1,4 +1,7 @@
 <?php
+//MySQL Connect
+include 'db.php';
+
 //ini_set('max_execution_time', 300);
 
 //Inicializimi
@@ -39,14 +42,17 @@ $obj = json_decode($result,true);
 //$pershkrimArtikulli= $obj['entiteteTeReja']['artRi']['0']['PERSHKRIMARTIKULLI'];
 //$njesia= $obj['entiteteTeReja']['artRi']['0']['KODNJESIA1'];
 
-echo "<pre>";
-print_r($obj);
-echo "</pre>";
+//echo "<pre>";
+//print_r($obj);
+//echo "</pre>";
 //
-//foreach($obj as $lista){
-//    foreach()
-//}
-//adding Some comments
+foreach($obj['entiteteTeReja']['artikujGjendjeRi'] as $lista){
+    foreach($lista as $x => $x_value) {
+    echo "Key=" . $x . ", Value=" . $x_value;
+    echo "<br>";
+}
+}
+
 
 
 //Mbyllja
