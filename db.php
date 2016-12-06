@@ -3,19 +3,20 @@
 
 global $link;
 
-$link = mysql_connect('localhost', 'root', '','nodesrv');
+$link = mysqli_connect('localhost', 'root', '','nodesrv');
 if (!$link) {
-    die('Could not connect: ' . mysql_error());
+    die('Could not connect: ' . mysqli_error());
 }
 echo 'Connected successfully';
 
-$db = mysql_select_db("nodesrv", $link);
+
+//$db = mysqli_select_db("nodesrv", $link);
 
 if($db){
     echo "Result OK";
 }
 
-mysql_close($link);
+
 ?>
 
 
