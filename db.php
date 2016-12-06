@@ -10,8 +10,6 @@ if (!$link) {
 echo 'Connected successfully';
 
 
-//$db = mysqli_select_db("nodesrv", $link);
-
 if($db){
     echo "Result OK";
 }
