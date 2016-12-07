@@ -1,5 +1,5 @@
 <?php
-ini_set('max_execution_time', 12000);
+//ini_set('max_execution_time', 300);
 //Inicializimi
 
 $link = mysqli_connect('localhost', 'root', '','nodesrv');
