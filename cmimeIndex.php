@@ -33,15 +33,15 @@ $result = curl_exec($ch);
 //$json = file_get_contents($result);
 $obj = json_decode($result,true);
 //
-echo "<pre>";
-print_r($obj);
-echo "</pre>";
+//echo "<pre>";
+//print_r($obj);
+//echo "</pre>";
 
 foreach($obj['entiteteTeReja']['cmimeReja']as $x){
 
     switch ($x['KODNIVELCMIMI']){
 
-        case 'N1': $mysqli->query("INSERT INTO cmimedatatable (KODARTIKULLI, C1) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C1 = ".$x['CMIMI']." ");
+        case 'N1': $mysqli->query("INSERT INTO gjendjeDataTable (KODARTIKULLI, C1) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C1 = ".$x['CMIMI']." ");
             break;
         case 'N2': $mysqli->query("INSERT INTO cmimedatatable (KODARTIKULLI, C2) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C2 = ".$x['CMIMI']." ");
             break;
@@ -52,6 +52,8 @@ foreach($obj['entiteteTeReja']['cmimeReja']as $x){
         case 'N5': $mysqli->query("INSERT INTO cmimedatatable (KODARTIKULLI, C5) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C5 = ".$x['CMIMI']." ");
             break;
         case 'N6': $mysqli->query("INSERT INTO cmimedatatable (KODARTIKULLI, C6) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C6 = ".$x['CMIMI']." ");
+            break;
+        case 'N7': $mysqli->query("INSERT INTO cmimedatatable (KODARTIKULLI, C0) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C0 = ".$x['CMIMI']." ");
             break;
         default:
             break;

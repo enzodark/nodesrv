@@ -1,12 +1,12 @@
 <?php
-//ini_set('max_execution_time', 300);
+ini_set('max_execution_time', 300);
 //Inicializimi
 
-$link = mysqli_connect('localhost', 'root', '','nodesrv');
-if (!$link) {
-    die('Could not connect: ' . mysqli_error());
-}
-echo 'Connected successfully';
+$mysqli = new mysqli("localhost","root","","nodesrv");
+	if($mysqli->connect_errno){
+		http_response_code(500);
+		exit;
+	}
 
 $url = "http://80.78.76.160:3050/entitetePost" ;
 //$url = "http://192.168.1.30:3050/artikujPost" ;
@@ -39,6 +39,22 @@ $obj = json_decode($result,true);
 echo "<pre>";
 print_r($obj);
 echo "</pre>";
+
+
+foreach($obj['entiteteTeReja']['artikujGjendjeRi']as $x){
+
+    switch ($x['KODI']){
+
+        case 'MQ': $mysqli->query("INSERT INTO gjendjeDataTable (KODARTIKULLI, MQ) VALUES ('".$x['KODARTIKULLI']."',".$x['gjendje'].") ON DUPLICATE KEY UPDATE MQ = ".$x['gjendje']." ");
+            break;
+        case 'MK': $mysqli->query("INSERT INTO gjendjeDataTable (KODARTIKULLI, MK) VALUES ('".$x['KODARTIKULLI']."',".$x['gjendje'].") ON DUPLICATE KEY UPDATE MK = ".$x['gjendje']." ");
+            break;
+        case 'MD': $mysqli->query("INSERT INTO gjendjeDataTable (KODARTIKULLI, MD) VALUES ('".$x['KODARTIKULLI']."',".$x['gjendje'].") ON DUPLICATE KEY UPDATE MD = ".$x['gjendje']." ");
+            break;
+        default:
+            break;
+    }
+}
 
 
 //Mbyllja

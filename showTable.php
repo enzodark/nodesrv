@@ -88,3 +88,16 @@ $shumaGjendje = "SELECT Sum(datatable2.gjendje) FROM datatable2 ";
     </table>
     </body>
 </html>
+
+
+
+
+
+
+SELECT
+gjendjedatatable.KODARTIKULLI,
+gjendjedatatable.MD,
+SUM(gjendjedatatable.MQ + gjendjedatatable.MK) AS Gjendja Total
+FROM
+gjendjedatatable
+GROUP BY KODARTIKULLI
