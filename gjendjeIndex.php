@@ -31,37 +31,16 @@ curl_setopt($ch, CURLOPT_POST,true);
 //curl_setopt($ch, CURLOPT_POSTFIELDS, $rawData);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $rawData3);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
 //Ekzektuimi
-
 $result = curl_exec($ch);
-//$json = file_get_contents($result);
-
 $obj = json_decode($result,true);
 
-//echo "<pre>";
-//print_r($obj);
-//echo "</pre>";
+echo "<pre>";
+print_r($obj);
+echo "</pre>";
 
-//foreach($lista as $x=> $x_value)
 
-//$stmt = $link->prepare("INSERT INTO DATATABLE2 VALUES (?,?,?,?,?,?,?,?,?,?)");
-foreach($obj['entiteteTeReja']['artikujGjendjeRi'] as $x){
-    //var_dump($lista);
-
-    //echo "VALUE: " . $lista["KODARTIKULLI"] . "<br>";
-
-    //foreach($lista as $x){
-        $colOne = $x["KODARTIKULLI"];
-        $sql = "INSERT INTO DATATABLE2(KODARTIKULLI,PERSHKRIMARTIKULLI,BARKOD,KODNJESIA1,KODI,gjendje,DTMODIFIKIM,cmimibaze,DETAJIM1,DETAJIM2
-) VALUES ('".$colOne ."','".$x["PERSHKRIMARTIKULLI"]."','".$x["BARKOD"]."','".$x["KODNJESIA1"]."','".$x["KODI"]."','".$x["gjendje"]."','".$x["DTMODIFIKIM"]."','".$x["cmimibaze"]."','".$x["DETAJIM1"]."','".$x["DETAJIM2"]."')" ;
-
-       $success = mysqli_query($link,$sql);
-        if(!$success) {
-          die("Query error: " . mysqli_error($link));
-        }
-    //}
-    //die("DIE");
-}
 //Mbyllja
 curl_close($ch);
 ?>

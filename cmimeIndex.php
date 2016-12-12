@@ -2,11 +2,11 @@
 ini_set('max_execution_time', 300);
 //Inicializimi
 
-$link = mysqli_connect('localhost', 'root', '','nodesrv');
-if (!$link) {
-    die('Could not connect: ' . mysqli_error());
-}
-echo 'Connected successfully';
+$mysqli = new mysqli("localhost","root","","nodesrv");
+	if($mysqli->connect_errno){
+		http_response_code(500);
+		exit;
+	}
 
 $url = "http://80.78.76.160:3050/cmimiPost" ;
 //$url = "http://192.168.1.30:3050/artikujPost" ;
@@ -19,13 +19,9 @@ $headr[] = 'Authorization: Basic ZGVtb3M1NjpkN2MwOGE3NDM2YTAxZWFkNjNmZTQ4ZGFlNWE
 $headr[] = 'ndermarrjaserver: Albamedia';
 $headr[] = 'Accept: application/json';
 
-//RawData To Send
-//$rawData ='{"art":[{"MARRE":"1\\/1\\/1990","NRSEL":15,"NRCHUNK":0,"PERDORUES":""}]}';
-//$rawData2 ='{"art":[{"MARRE":"1\\/1\\/2015","NRSEL":100,"NRCHUNK":0,"PERDORUES":"",""}]}';
-//$rawData3='{"artikujGjendje":[{"MARRE":"1\\/1\\/2015","NRSEL":100,"NRCHUNK":0,"PERDORUES":"","MAGKODI":"","KODARTIKULLI":"","ARTBARKOD":"","DETAJIM1":"","DETAJIM2":""}]}';
 $rawData4 ='{"cmime":[{"MARRE":"1\\/1\\/1990","NRSEL":100,"NRCHUNK":0,"PERDORUES":"","KODARTIKULLI":"","CMIMI":"","CMIMI2":""}]}';
 
-//Settings cURL Option
+//Settings cURL Option`
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
 curl_setopt($ch, CURLOPT_POST,true);
 //curl_setopt($ch, CURLOPT_POSTFIELDS, $rawData);
@@ -36,31 +32,32 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $result = curl_exec($ch);
 //$json = file_get_contents($result);
 $obj = json_decode($result,true);
-
+//
 echo "<pre>";
 print_r($obj);
 echo "</pre>";
 
-//foreach($lista as $x=> $x_value)
+foreach($obj['entiteteTeReja']['cmimeReja']as $x){
 
-////$stmt = $link->prepare("INSERT INTO DATATABLE2 VALUES (?,?,?,?,?,?,?,?,?,?)");
-//foreach($obj['entiteteTeReja']['artikujGjendjeRi'] as $x){
-//    //var_dump($lista);
-//
-//    //echo "VALUE: " . $lista["KODARTIKULLI"] . "<br>";
-//
-//    //foreach($lista as $x){
-//        $colOne = $x["KODARTIKULLI"];
-//        $sql = "INSERT INTO DATATABLE2(KODARTIKULLI,PERSHKRIMARTIKULLI,BARKOD,KODNJESIA1,KODI,gjendje,DTMODIFIKIM,cmimibaze,DETAJIM1,DETAJIM2
-//) VALUES ('".$colOne ."','".$x["PERSHKRIMARTIKULLI"]."','".$x["BARKOD"]."','".$x["KODNJESIA1"]."','".$x["KODI"]."','".$x["gjendje"]."','".$x["DTMODIFIKIM"]."','".$x["cmimibaze"]."','".$x["DETAJIM1"]."','".$x["DETAJIM2"]."')" ;
-//
-//       $success = mysqli_query($link,$sql);
-//        if(!$success) {
-//          die("Query error: " . mysqli_error($link));
-//        }
-//    //}
-//    //die("DIE");
-//}
+    switch ($x['KODNIVELCMIMI']){
+
+        case 'N1': $mysqli->query("INSERT INTO cmimedatatable (KODARTIKULLI, C1) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C1 = ".$x['CMIMI']." ");
+            break;
+        case 'N2': $mysqli->query("INSERT INTO cmimedatatable (KODARTIKULLI, C2) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C2 = ".$x['CMIMI']." ");
+            break;
+        case 'N3': $mysqli->query("INSERT INTO cmimedatatable (KODARTIKULLI, C3) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C3 = ".$x['CMIMI']." ");
+            break;
+        case 'N4': $mysqli->query("INSERT INTO cmimedatatable (KODARTIKULLI, C4) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C4 = ".$x['CMIMI']." ");
+            break;
+        case 'N5': $mysqli->query("INSERT INTO cmimedatatable (KODARTIKULLI, C5) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C5 = ".$x['CMIMI']." ");
+            break;
+        case 'N6': $mysqli->query("INSERT INTO cmimedatatable (KODARTIKULLI, C6) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C6 = ".$x['CMIMI']." ");
+            break;
+        default:
+            break;
+    }
+
+}
 //Mbyllja
 curl_close($ch);
 ?>
