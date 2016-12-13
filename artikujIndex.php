@@ -2,11 +2,11 @@
 //ini_set('max_execution_time', 300);
 //Inicializimi
 
-$link = mysqli_connect('localhost', 'root', '','nodesrv');
-if (!$link) {
-    die('Could not connect: ' . mysqli_error());
-}
-echo 'Connected successfully';
+$mysqli = new mysqli("localhost","root","","nodesrv");
+	if($mysqli->connect_errno){
+		http_response_code(500);
+		exit;
+	}
 
 $url = "http://80.78.76.160:3050/artikujPost" ;
 //$url = "http://192.168.1.30:3050/artikujPost" ;
@@ -35,18 +35,19 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 //Ekzektuimi
 
 $result = curl_exec($ch);
-//$json = file_get_contents($result);
+
 $obj = json_decode($result,true);
 
+
 echo "<pre>";
-print_r($obj);
+var_dump($obj);
 echo "</pre>";
 
 //foreach($lista as $x=> $x_value)
 
-//$stmt = $link->prepare("INSERT INTO DATATABLE2 VALUES (?,?,?,?,?,?,?,?,?,?)");
+
 foreach($obj['entiteteTeReja']['artRi'] as $x){
-        $sql = "INSERT INTO DATATABLE(KODARTIKULLI,
+       $mysqli->query("INSERT INTO DATATABLE(KODARTIKULLI,
 PERSHKRIMARTIKULLI,
 PERSHKRIMIANGARTIKULLI,
 KODNJESIA1,
@@ -71,12 +72,8 @@ IDSTATUSDOK,
 PERPESHORE,
 LLOJGARANCIA,
 GARANCIA
-) VALUES ('".$x["KODARTIKULLI"]."','".$x["PERSHKRIMARTIKULLI"]."','".$x["PERSHKRIMIANGARTIKULLI"]."','".$x["KODNJESIA1"]."','".$x["KODNJESIA2"]."','".$x["KOEFICENTARTIKULLI"]."','".$x["MAGAZINA"]."','".$x["AKTIV"]."','".$x["KLASA"]."','".$x["GRUPI"]."','".$x["NENGRUPI"]."','".$x["TVSHKODI"]."','".$x["VENDODHJEARTIKULLI"]."','".$x["PERSHKRIMI"]."','".$x["IMAZH"]."','".$x["VLERATVSH"]."','".$x["KODIDOGANORARTIKULLI"]."','".$x["ARTREF"]."','".$x["KODIFIKIMARTIKULLI"]."','".$x["KODIFIKIMARTIKULLI2"]."','".$x["DTMODIFIKIM"]."','".$x["IDSTATUSDOK"]."','".$x["PERPESHORE"]."','".$x["LLOJGARANCIA"]."','".$x["GARANCIA"]."')";
+) VALUES ('".$x["KODARTIKULLI"]."','".$x["PERSHKRIMARTIKULLI"]."','".$x["PERSHKRIMIANGARTIKULLI"]."','".$x["KODNJESIA1"]."','".$x["KODNJESIA2"]."','".$x["KOEFICENTARTIKULLI"]."','".$x["MAGAZINA"]."','".$x["AKTIV"]."','".$x["KLASA"]."','".$x["GRUPI"]."','".$x["NENGRUPI"]."','".$x["TVSHKODI"]."','".$x["VENDODHJEARTIKULLI"]."','".$x["PERSHKRIMI"]."','".$x["IMAZH"]."','".$x["VLERATVSH"]."','".$x["KODIDOGANORARTIKULLI"]."','".$x["ARTREF"]."','".$x["KODIFIKIMARTIKULLI"]."','".$x["KODIFIKIMARTIKULLI2"]."','".$x["DTMODIFIKIM"]."','".$x["IDSTATUSDOK"]."','".$x["PERPESHORE"]."','".$x["LLOJGARANCIA"]."','".$x["GARANCIA"]."') ON DUPLICATE KEY UPDATE PERSHKRIMARTIKULLI = '".$x["PERSHKRIMARTIKULLI"]."'  " );
 
-       $success = mysqli_query($link,$sql);
-        if(!$success) {
-          die("Query error: " . mysqli_error($link));
-        }
 }
 //Mbyllja
 curl_close($ch);

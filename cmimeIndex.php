@@ -9,7 +9,6 @@ $mysqli = new mysqli("localhost","root","","nodesrv");
 	}
 
 $url = "http://80.78.76.160:3050/cmimiPost" ;
-//$url = "http://192.168.1.30:3050/artikujPost" ;
 $ch = curl_init($url);
 
 //Parametrat Header
@@ -24,13 +23,11 @@ $rawData4 ='{"cmime":[{"MARRE":"1\\/1\\/1990","NRSEL":100,"NRCHUNK":0,"PERDORUES
 //Settings cURL Option`
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
 curl_setopt($ch, CURLOPT_POST,true);
-//curl_setopt($ch, CURLOPT_POSTFIELDS, $rawData);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $rawData4);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 //Ekzektuimi
 
 $result = curl_exec($ch);
-//$json = file_get_contents($result);
 $obj = json_decode($result,true);
 //
 //echo "<pre>";
