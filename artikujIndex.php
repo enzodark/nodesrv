@@ -39,9 +39,9 @@ $result = curl_exec($ch);
 $obj = json_decode($result,true);
 
 
-echo "<pre>";
-var_dump($obj);
-echo "</pre>";
+//echo "<pre>";
+//var_dump($obj);
+//echo "</pre>";
 
 //foreach($lista as $x=> $x_value)
 

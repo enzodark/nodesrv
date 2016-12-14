@@ -1,87 +1,105 @@
 <?php
 require 'db.php';
 
-
-       $query = "SELECT
-datatable.KODARTIKULLI,
-datatable.PERSHKRIMARTIKULLI,
-datatable.PERSHKRIMIANGARTIKULLI,
-datatable.KODNJESIA1,
-datatable.KODNJESIA2,
-datatable.KOEFICENTARTIKULLI,
-datatable.MAGAZINA,
-datatable.GRUPI,
-datatable.NENGRUPI,
-datatable2.KODI,
-datatable2.gjendje,
-datatable2.DETAJIM1,
-datatable2.DETAJIM2,
-datatable2.cmimibaze,
-datatable2.BARKOD,
-datatable.AKTIV
+       $query ="SELECT
+	datatable.KODARTIKULLI as KODI,
+	datatable.PERSHKRIMARTIKULLI as PERSHKRIMI,
+	datatable.KODNJESIA1 as NJESIA,
+	datatable.KODNJESIA2 as NJESIA 2,
+	datatable.AKTIV as AKTIV,
+	datatable.GRUPI as GRUPI,
+	datatable.NENGRUPI as NENGRUPI,
+	datatable.KODBARI as KODBARI,
+	datatable.VENDODHJEARTIKULLI as VENDODHJE,
+	gjendjedatatable.MD as GjendjeDogane,
+	cmimedatatable.C1 as C1,
+	cmimedatatable.C2 as C2,
+	cmimedatatable.C3 as C3,
+	cmimedatatable.C4 as C4,
+	cmimedatatable.C5 as C5,
+	cmimedatatable.C6 as C6,
+	cmimedatatable.C0 as C0,
+SUM(gjendjedatatable.MQ+gjendjedatatable.MK) AS Gjendja
 FROM
-datatable
-INNER JOIN datatable2 ON datatable.KODARTIKULLI = datatable2.KODARTIKULLI";
+	cmimedatatable
+INNER JOIN datatable ON cmimedatatable.KODARTIKULLI = datatable.KODARTIKULLI
+INNER JOIN gjendjedatatable ON datatable.KODARTIKULLI = gjendjedatatable.KODARTIKULLI
+AND gjendjedatatable.KODARTIKULLI = cmimedatatable.KODARTIKULLI
+GROUP BY gjendjedatatable.KODARTIKULLI";
 
-        $result = mysqli_query($link,$query);
-
-$shumaGjendje = "SELECT Sum(datatable2.gjendje) FROM datatable2 ";
-
- $result2 = mysqli_query($link,$shumaGjendje);
-    echo mysql_result($shumaGjendje, 0);
-
+$result = $mysqli->query($query);
 
 ?>
 <html>
-    <head></head>
+    <head>
+       <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+crossorigin="anonymous"></script>
+
+    </head>
     <body>
         <table>
     <thead>
         <tr>
-            <th>Kodi</th>
-            <th>Pershrkimi</th>
-            <th>Pershkrimi 2</th>
-            <th>KODNJESIA1</th>
-            <th>KODNJESIA2</th>
-            <th>KOEFICENTARTIKULLI</th>
-            <th>MAGAZINA</th>
-            <th>GRUPI</th>
-            <th>NENGRUPI</th>
-            <th>KODI</th>
-            <th>gjendje</th>
-            <th>DETAJIM1</th>
-            <th>DETAJIM2</th>
-            <th>cmimibaze</th>
-            <th>BARKOD</th>
-            <th>AKTIV</th>
+        <th>KODI</th>
+        <th>PERSHKRIMI</th>
+        <th>NJESIA</th>
+        <th>NJESIA</th>
+        <th>AKTIV</th>
+        <th>GRUPI</th>
+        <th>NENGRUPI</th>
+        <th>KODBARI</th>
+        <th>VENDODHJE</th>
+        <th>GjendjeDogane</th>
+        <th>C1</th>
+        <th>C2</th>
+        <th>C3</th>
+        <th>C4</th>
+        <th>C5</th>
+        <th>C6</th>
+        <th>C0</th>
+        <th>Gjendja</th>
                     </tr>
     </thead>
+        <tfooter>
+        <tr>
+            <th>KODI</th>
+            <th>PERSHKRIMI</th>
+            <th>NJESIA</th>
+            <th>NJESIA</th>
+            <th>AKTIV</th>
+            <th>GRUPI</th>
+            <th>NENGRUPI</th>
+            <th>KODBARI</th>
+            <th>VENDODHJE</th>
+            <th>GjendjeDogane</th>
+            <th>C1</th>
+            <th>C2</th>
+            <th>C3</th>
+            <th>C4</th>
+            <th>C5</th>
+            <th>C6</th>
+            <th>C0</th>
+            <th>Gjendja</th>
+                    </tr>
+    </tfooter>
 
     <tbody>
     <?php
 
-            while($infoItems = $result->fetch_array()){
+
+            while($infoItems = mysql_fetch_row($result)){
                 echo    "
                             <tr>
-                                <td>".$infoItems['KODARTIKULLI']."</td>
-                                <td>".$infoItems['PERSHKRIMARTIKULLI']."</td>
-                                <td>".$infoItems['PERSHKRIMIANGARTIKULLI']."</td>
-                                <td>".$infoItems['KODNJESIA1']."</td>
-                                <td>".$infoItems['KODNJESIA2']."</td>
-                                <td>".$infoItems['KOEFICENTARTIKULLI']."</td>
-                                <td>".$infoItems['MAGAZINA']."</td>
+                                <td>".$infoItems['KODI']."</td>
+                                <td>".$infoItems['PERSHKRIMI']."</td>
+                                <td>".$infoItems['NJESIA']."</td>
+                                <td>".$infoItems['NJESIA 2']."</td>
+                                <td>".$infoItems['AKTIV']."</td>
                                 <td>".$infoItems['GRUPI']."</td>
                                 <td>".$infoItems['NENGRUPI']."</td>
-                                <td>".$infoItems['KODI']."</td>
-                                <td>".$infoItems['gjendje']."</td>
-                                <td>".$infoItems['DETAJIM1']."</td>
-                                <td>".$infoItems['DETAJIM2']."</td>
-                                <td>".$infoItems['cmimibaze']."</td>
-                                <td>".$infoItems['BARKOD']."</td>
-                                <td>".$infoItems['AKTIV']."</td>
+                                <td>".$infoItems['KODBARI']."</td>
                             </tr>
                         ";
-
             }
         ?>
      </tbody>
@@ -89,15 +107,3 @@ $shumaGjendje = "SELECT Sum(datatable2.gjendje) FROM datatable2 ";
     </body>
 </html>
 
-
-
-
-
-
-SELECT
-gjendjedatatable.KODARTIKULLI,
-gjendjedatatable.MD,
-SUM(gjendjedatatable.MQ + gjendjedatatable.MK) AS Gjendja Total
-FROM
-gjendjedatatable
-GROUP BY KODARTIKULLI

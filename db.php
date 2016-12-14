@@ -1,16 +1,8 @@
 
 <?php
 
-global $link;
-
-$link = mysqli_connect('localhost', 'root', '','nodesrv');
-if (!$link) {
-    die('Could not connect: ' . mysqli_error());
-}
-echo 'Connected successfully';
-
-
-?>
-
-
-
+$mysqli = new mysqli("localhost","root","","nodesrv");
+	if($mysqli->connect_errno){
+		http_response_code(500);
+		exit;
+	}
