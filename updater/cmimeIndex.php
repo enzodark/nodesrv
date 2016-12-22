@@ -29,10 +29,10 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 $result = curl_exec($ch);
 $obj = json_decode($result,true);
-//
-//echo "<pre>";
-//print_r($obj);
-//echo "</pre>";
+
+echo "<pre>";
+print_r($obj);
+echo "</pre>";
 
 foreach($obj['entiteteTeReja']['cmimeReja']as $x){
 
