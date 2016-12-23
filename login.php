@@ -24,22 +24,19 @@
 
                    include '/database/db.php';
 
+
                    if(isset($_POST['username']) && isset($_POST['password'])){
 
                        $username = $_POST['username'];
-                       $password = md5($_POST['password']);
-                       $sql = "SELECT * FROM users WHERE username=? AND passowrd=? ";
-                       $stmt = $mysqli->prepare($sql);
-                       var_dump($stmt);
-                       $stmt->bindParam('s', $username);
-                       $stmt->bindParam('s', $password);
-                       $stmt->execute();
+                       $password = $_POST['password'];
+                       $stmt = $mysqli->query("SELECT * FROM users WHERE uname='$username' AND password = '$password'");
 
-                       $row = $stmt->fetch();
-                       $user = $row['username'];
+                       $row = $stmt->fetch_assoc();
+                       $user = $row['uname'];
                        $pass = $row['password'];
-                       $id = $row['id'];
+                       $id = $row['ID'];
                        $type = $row['type'];
+                       $emri = $row['firstName'];
 
                        if($username == $user && $password == $pass){
                            session_start();
@@ -47,6 +44,7 @@
                            $_SESSION['password'] = $pass;
                            $_SESSION['id'] = $id;
                            $_SESSION['type'] = $type;
+                           $_SESSION['firstName'] = $emri;
                            ?>
                            <script>window.location.href='index.php'</script>
                            <?php
@@ -71,7 +69,7 @@
                                  <label>Password</label>
                                  <input type="password" class="form-control" name="password"/>
                              </div>
-                             <input type="submit" value="Login" class="btn btn-primary"/>
+                             <input type="submit" name="submit" value="Login" class="btn btn-primary"/>
                          </form>
 
                </div>
