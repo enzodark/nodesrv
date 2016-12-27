@@ -6,34 +6,26 @@ if(!isset($_SESSION['username'])){
     header('Location: login.php');
 }
 
-//$analiza = $mysqli->query("SELECT
-//datatable.KODARTIKULLI as KODI,
-//datatable.PERSHKRIMARTIKULLI AS PERSHKRIMI,
-//datatable.GRUPI AS GRUPI,
-//datatable.NENGRUPI AS NENGRUPI,
-//datatable.KODBARI AS KODBARI,
-//Sum(gjendjedatatable.MQ + gjendjedatatable.MK) AS Gjendja,
-//gjendjedatatable.MD AS Dogana,
-//cmimedatatable.C0 AS C0,
-//cmimedatatable.C1 AS C1,
-//cmimedatatable.C2 AS C2,
-//cmimedatatable.C3 AS C3,
-//cmimedatatable.C4 AS C4,
-//cmimedatatable.C5 AS C5,
-//cmimedatatable.C6 AS C6
-//FROM
-//gjendjedatatable
-//INNER JOIN datatable ON datatable.KODARTIKULLI = gjendjedatatable.KODARTIKULLI
-//INNER JOIN cmimedatatable ON datatable.KODARTIKULLI = cmimedatatable.KODARTIKULLI
-//GROUP BY gjendjedatatable.KODARTIKULLI");
-//
-////create an array
-//    $emparray = array();
-//    while($row =mysqli_fetch_assoc($analiza))
-//    {
-//        $emparray[] = $row;
-//    }
-//$tempdata = json_encode($emparray);
+$analiza = $mysqli->query("SELECT
+datatable.KODARTIKULLI as KODI,
+datatable.PERSHKRIMARTIKULLI AS PERSHKRIMI,
+datatable.GRUPI AS GRUPI,
+datatable.NENGRUPI AS NENGRUPI,
+datatable.KODBARI AS KODBARI,
+Sum(gjendjedatatable.MQ + gjendjedatatable.MK) AS Gjendja,
+gjendjedatatable.MD AS Dogana,
+cmimedatatable.C0 AS C0,
+cmimedatatable.C1 AS C1,
+cmimedatatable.C2 AS C2,
+cmimedatatable.C3 AS C3,
+cmimedatatable.C4 AS C4,
+cmimedatatable.C5 AS C5,
+cmimedatatable.C6 AS C6
+FROM
+gjendjedatatable
+INNER JOIN datatable ON datatable.KODARTIKULLI = gjendjedatatable.KODARTIKULLI
+INNER JOIN cmimedatatable ON datatable.KODARTIKULLI = cmimedatatable.KODARTIKULLI
+GROUP BY gjendjedatatable.KODARTIKULLI");
 
 ?>
 
@@ -49,10 +41,10 @@ if(!isset($_SESSION['username'])){
 
     <!-- Bootstrap -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Tabulator -->
-    <link href="assets/tabulator/tabulator.css" rel="stylesheet">
-    <script type="text/javascript" src="assets/tabulator/tabulator.js"></script>
-
+    <!-- DataTable -->
+    <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css">
+    <script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -126,11 +118,51 @@ if(!isset($_SESSION['username'])){
 
             </div>
             <div class="col-xs-10">
-   <div id="analizaTable">
-        </div>
-
-           <div id="example-table">
-        </div>
+<table class="table table-striped table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>KODI</th>
+            <th>PERSHKRIMI</th>
+            <th>GRUPI</th>
+            <th>NENGRUPI</th>
+            <th>KODBARI</th>
+            <th>GJEDNJA</th>
+            <th>DOGANA</th>
+            <th>C0</th>
+            <th>C1</th>
+            <th>C2</th>
+            <th>C3</th>
+            <th>C4</th>
+            <th>C5</th>
+            <th>C6</th>
+        </tr>
+    </thead>
+    <tfoot>
+                <tr>
+            <th>KODI</th>
+            <th>PERSHKRIMI</th>
+            <th>GRUPI</th>
+            <th>NENGRUPI</th>
+            <th>KODBARI</th>
+            <th>GJEDNJA</th>
+            <th>DOGANA</th>
+            <th>C0</th>
+            <th>C1</th>
+            <th>C2</th>
+            <th>C3</th>
+            <th>C4</th>
+            <th>C5</th>
+            <th>C6</th>
+        </tr>
+    </tfoot>
+    <tbody>
+        <?php
+        while($row = mysqli_fetch_array($analiza)){   //Creates a loop to loop through results
+echo "<tr><td>" . $row['KODI'] . "</td><td>" . $row['PERSHKRIMI'] . "</td><td>" . $row['GRUPI'] . "</td><td>" . $row['NENGRUPI'] . "</td><td>" . $row['KODBARI'] . "</td><td>" . $row['Gjendja'] . "</td><td>" . $row['Dogana'] . "</td><td>" . $row['C0'] . "</td><td>" . $row['C1'] . "</td><td>" . $row['C2'] . "</td><td>" . $row['C3'] . "</td><td>" . $row['C4'] . "</td><td>" . $row['C5'] . "</td><td>" . $row['C6'] . "</td></tr>";  //$row['index'] the index here is a field name
+}
+?>
+    </tbody>
+</table>
             </div>
         </div>
     </div>
@@ -142,29 +174,6 @@ if(!isset($_SESSION['username'])){
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
 
-<script>
-     $("#analizaTable").tabulator({
-    height:"311px",
-    sortable: true,
-    ajaxURL:"updater/analizaMag.php",
-    columns:[
-        {title:"Kodi", field:"name"},
-        {title:"Pershkrimi", field:"name"},
-        {title:"Grupi", field:"name"},
-        {title:"Nengrupi", field:"name"},
-        {title:"Kodbari", field:"name"},
-        {title:"Gjendja", field:"name"},
-        {title:"GjendjaDogane", field:"name"},
-        {title:"C0", field:"name"},
-        {title:"C1", field:"name"},
-        {title:"C2", field:"name"},
-        {title:"C3", field:"name"},
-        {title:"C4", field:"name"},
-        {title:"C5", field:"name"},
-        {title:"C6", field:"name"},
-    ],
-});
-      </script>
   </body>
 </html>
 
