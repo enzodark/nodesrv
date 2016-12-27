@@ -24,6 +24,22 @@ gjendjedatatable
 INNER JOIN datatable ON datatable.KODARTIKULLI = gjendjedatatable.KODARTIKULLI
 INNER JOIN cmimedatatable ON datatable.KODARTIKULLI = cmimedatatable.KODARTIKULLI
 GROUP BY gjendjedatatable.KODARTIKULLI");
+
+$value1 = $mysqli->query("SELECT
+Sum(gjendjedatatable.MQ + gjendjedatatable.MK) AS gjendjaTOTALE
+FROM
+gjendjedatatable
+");
+$gjendjaTotale = mysqli_fetch_assoc($value1);
+
+$value2 = $mysqli->query("SELECT
+Sum(gjendjedatatable.MD) AS gjendjaDogana
+FROM
+gjendjedatatable
+");
+
+$gjendjaDogana = mysqli_fetch_assoc($value2);
+
 ?>
 
 <!DOCTYPE html>
@@ -46,8 +62,9 @@ GROUP BY gjendjedatatable.KODARTIKULLI");
     <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css">
     <script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/b-1.2.4/b-colvis-1.2.4/b-flash-1.2.4/b-html5-1.2.4/b-print-1.2.4/fc-3.2.2/fh-3.1.2/r-2.1.0/datatables.min.css"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/b-1.2.4/b-colvis-1.2.4/b-flash-1.2.4/b-html5-1.2.4/b-print-1.2.4/fc-3.2.2/fh-3.1.2/r-2.1.0/datatables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/pdfmake-0.1.18/dt-1.10.13/b-1.2.4/b-colvis-1.2.4/b-flash-1.2.4/b-html5-1.2.4/b-print-1.2.4/fc-3.2.2/fh-3.1.2/r-2.1.0/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/pdfmake-0.1.18/dt-1.10.13/b-1.2.4/b-colvis-1.2.4/b-flash-1.2.4/b-html5-1.2.4/b-print-1.2.4/fc-3.2.2/fh-3.1.2/r-2.1.0/datatables.min.js"></script>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -113,14 +130,14 @@ GROUP BY gjendjedatatable.KODARTIKULLI");
 
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-lg-12">
                 <div class="list-group">
   <a href="analizaMag.php" class="list-group-item">Analiza e magazines</a>
   <a href="logout.php" class="list-group-item">Logout</a>
 </div>
 
             </div>
-            <div class="col-md-12">
+            <div class="col-lg-12">
 <table class="table table-striped table-bordered table-condensed" id="analizaTable">
     <thead>
         <tr>
@@ -129,7 +146,7 @@ GROUP BY gjendjedatatable.KODARTIKULLI");
             <th>GRUPI</th>
             <th>NENGRUPI</th>
             <th>KODBARI</th>
-            <th>GJEDNJA</th>
+            <th>GJENDJA</th>
             <th>DOGANA</th>
             <th>C0</th>
             <th>C1</th>
@@ -147,8 +164,8 @@ GROUP BY gjendjedatatable.KODARTIKULLI");
             <th>GRUPI</th>
             <th>NENGRUPI</th>
             <th>KODBARI</th>
-            <th>GJEDNJATOTALE</th>
-            <th>GJENDJA TOTALE DOGANE</th>
+            <th><?php echo $gjendjaTotale['gjendjaTOTALE']; ?> <br/> GJEDNJA TOTALE </th>
+            <th> <?php echo $gjendjaDogana['gjendjaDogana']; ?> <br/> DOGANA </th>
             <th>C0</th>
             <th>C1</th>
             <th>C2</th>

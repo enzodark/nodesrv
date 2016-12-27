@@ -30,15 +30,15 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $result = curl_exec($ch);
 $obj = json_decode($result,true);
 
-echo "<pre>";
-print_r($obj);
-echo "</pre>";
+//echo "<pre>";
+//print_r($obj);
+//echo "</pre>";
 
 foreach($obj['entiteteTeReja']['cmimeReja']as $x){
 
     switch ($x['KODNIVELCMIMI']){
 
-        case 'N1': $mysqli->query("INSERT INTO gjendjeDataTable (KODARTIKULLI, C1) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C1 = ".$x['CMIMI']." ");
+        case 'N1': $mysqli->query("INSERT INTO cmimedatatable (KODARTIKULLI, C1) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C1 = ".$x['CMIMI']." ");
             break;
         case 'N2': $mysqli->query("INSERT INTO cmimedatatable (KODARTIKULLI, C2) VALUES ('".$x['KODARTIKULLI']."',".$x['CMIMI'].") ON DUPLICATE KEY UPDATE C2 = ".$x['CMIMI']." ");
             break;
