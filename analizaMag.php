@@ -5,7 +5,39 @@ session_start();
 if(!isset($_SESSION['username'])){
     header('Location: login.php');
 }
+
+//$analiza = $mysqli->query("SELECT
+//datatable.KODARTIKULLI as KODI,
+//datatable.PERSHKRIMARTIKULLI AS PERSHKRIMI,
+//datatable.GRUPI AS GRUPI,
+//datatable.NENGRUPI AS NENGRUPI,
+//datatable.KODBARI AS KODBARI,
+//Sum(gjendjedatatable.MQ + gjendjedatatable.MK) AS Gjendja,
+//gjendjedatatable.MD AS Dogana,
+//cmimedatatable.C0 AS C0,
+//cmimedatatable.C1 AS C1,
+//cmimedatatable.C2 AS C2,
+//cmimedatatable.C3 AS C3,
+//cmimedatatable.C4 AS C4,
+//cmimedatatable.C5 AS C5,
+//cmimedatatable.C6 AS C6
+//FROM
+//gjendjedatatable
+//INNER JOIN datatable ON datatable.KODARTIKULLI = gjendjedatatable.KODARTIKULLI
+//INNER JOIN cmimedatatable ON datatable.KODARTIKULLI = cmimedatatable.KODARTIKULLI
+//GROUP BY gjendjedatatable.KODARTIKULLI");
+//
+////create an array
+//    $emparray = array();
+//    while($row =mysqli_fetch_assoc($analiza))
+//    {
+//        $emparray[] = $row;
+//    }
+//$tempdata = json_encode($emparray);
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,6 +49,9 @@ if(!isset($_SESSION['username'])){
 
     <!-- Bootstrap -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Tabulator -->
+    <link href="assets/tabulator/tabulator.css" rel="stylesheet">
+    <script type="text/javascript" src="assets/tabulator/tabulator.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -83,30 +118,53 @@ if(!isset($_SESSION['username'])){
 
     <div class="container">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-xs-2">
                 <div class="list-group">
   <a href="analizaMag.php" class="list-group-item">Analiza e magazines</a>
   <a href="logout.php" class="list-group-item">Logout</a>
 </div>
 
             </div>
-            <div class="col-md-10">
-                <div class="jumbotron">
-                      <h1>Hello, <?php echo $_SESSION['firstName'];; ?>!</h1>
-                      <p><div class="jumbotron">
-                      <h1>Hello, world!</h1>
-                      <p>...</p>
-                    </div></p>
-</div>
+            <div class="col-xs-10">
+   <div id="analizaTable">
+        </div>
 
+           <div id="example-table">
+        </div>
             </div>
         </div>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+
+<script>
+     $("#analizaTable").tabulator({
+    height:"311px",
+    sortable: true,
+    ajaxURL:"updater/analizaMag.php",
+    columns:[
+        {title:"Kodi", field:"name"},
+        {title:"Pershkrimi", field:"name"},
+        {title:"Grupi", field:"name"},
+        {title:"Nengrupi", field:"name"},
+        {title:"Kodbari", field:"name"},
+        {title:"Gjendja", field:"name"},
+        {title:"GjendjaDogane", field:"name"},
+        {title:"C0", field:"name"},
+        {title:"C1", field:"name"},
+        {title:"C2", field:"name"},
+        {title:"C3", field:"name"},
+        {title:"C4", field:"name"},
+        {title:"C5", field:"name"},
+        {title:"C6", field:"name"},
+    ],
+});
+      </script>
   </body>
 </html>
 

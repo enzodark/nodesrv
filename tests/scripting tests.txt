@@ -62,4 +62,10 @@ $promise->wait();
         $stmt->bindParam(10,$x['DETAJIM2']);
         
         $stmt->execute();
+        
+        
+        
+              var tabledata[] = <?php while($row = mysqli_fetch_array($analiza)){   //Creates a loop to loop through results
+echo "<tr><td>" . $row['KODI'] . "</td><td>" . $row['PERSHKRIMI'] . "</td><td>" . $row['GRUPI'] . "</td><td>" . $row['NENGRUPI'] . "</td><td>" . $row['KODBARI'] . "</td><td>" . $row['Gjendja'] . "</td><td>" . $row['Dogana'] . "</td><td>" . $row['C0'] . "</td><td>" . $row['C1'] . "</td><td>" . $row['C2'] . "</td><td>" . $row['C3'] . "</td><td>" . $row['C4'] . "</td><td>" . $row['C5'] . "</td><td>" . $row['C6'] . "</td></tr>";  //$row['index'] the index here is a field name
+}
 
