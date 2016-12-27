@@ -1,11 +1,9 @@
 <?php
 include '/database/db.php';
 session_start();
-
 if(!isset($_SESSION['username'])){
     header('Location: login.php');
 }
-
 $analiza = $mysqli->query("SELECT
 datatable.KODARTIKULLI as KODI,
 datatable.PERSHKRIMARTIKULLI AS PERSHKRIMI,
@@ -26,9 +24,7 @@ gjendjedatatable
 INNER JOIN datatable ON datatable.KODARTIKULLI = gjendjedatatable.KODARTIKULLI
 INNER JOIN cmimedatatable ON datatable.KODARTIKULLI = cmimedatatable.KODARTIKULLI
 GROUP BY gjendjedatatable.KODARTIKULLI");
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,10 +37,17 @@ GROUP BY gjendjedatatable.KODARTIKULLI");
 
     <!-- Bootstrap -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- DataTable -->
     <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css">
     <script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/b-1.2.4/b-colvis-1.2.4/b-flash-1.2.4/b-html5-1.2.4/b-print-1.2.4/fc-3.2.2/fh-3.1.2/r-2.1.0/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/b-1.2.4/b-colvis-1.2.4/b-flash-1.2.4/b-html5-1.2.4/b-print-1.2.4/fc-3.2.2/fh-3.1.2/r-2.1.0/datatables.min.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -110,15 +113,15 @@ GROUP BY gjendjedatatable.KODARTIKULLI");
 
     <div class="container">
         <div class="row">
-            <div class="col-xs-2">
+            <div class="col-md-12">
                 <div class="list-group">
   <a href="analizaMag.php" class="list-group-item">Analiza e magazines</a>
   <a href="logout.php" class="list-group-item">Logout</a>
 </div>
 
             </div>
-            <div class="col-xs-10">
-<table class="table table-striped table-bordered table-condensed">
+            <div class="col-md-12">
+<table class="table table-striped table-bordered table-condensed" id="analizaTable">
     <thead>
         <tr>
             <th>KODI</th>
@@ -144,8 +147,8 @@ GROUP BY gjendjedatatable.KODARTIKULLI");
             <th>GRUPI</th>
             <th>NENGRUPI</th>
             <th>KODBARI</th>
-            <th>GJEDNJA</th>
-            <th>DOGANA</th>
+            <th>GJEDNJATOTALE</th>
+            <th>GJENDJA TOTALE DOGANE</th>
             <th>C0</th>
             <th>C1</th>
             <th>C2</th>
@@ -167,12 +170,13 @@ echo "<tr><td>" . $row['KODI'] . "</td><td>" . $row['PERSHKRIMI'] . "</td><td>" 
         </div>
     </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <!-- Script executed on the table -->
+    <script>
+    $('#analizaTable').dataTable({
+        dom: 'B<"clear">lfrtip',
+    buttons: [ 'copy', 'csv']
+    } );
+    </script>
 
   </body>
 </html>
