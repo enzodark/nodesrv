@@ -144,7 +144,7 @@ if(!isset($_SESSION['username'])){
       <div class="modal-body">
       <div class="message"></div>
 <div class="form-group">
- <form action="phpAction/create.php" method="post" id="shtoPerdoruesForm">
+ <form action="phpAction/create.php" method="post" id="shtoPerdorues">
   <div class="form-group">
     <label for="name">Emri</label>
     <input type="name" class="form-control" name="firstName" id="firstName" placeholder="Emri">
