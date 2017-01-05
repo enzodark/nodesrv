@@ -169,7 +169,7 @@ if(!isset($_SESSION['username'])){
         <option value="anetar">Anetar</option>
     </select>
      </div>
-      </div>
+<!--       </div> -->
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
     <button type="submit" class="btn btn-primary">Submit</button>
