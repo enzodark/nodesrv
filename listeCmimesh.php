@@ -18,7 +18,8 @@ cmimedatatable.C2 AS C2,
 cmimedatatable.C3 AS C3,
 cmimedatatable.C4 AS C4,
 cmimedatatable.C5 AS C5,
-cmimedatatable.C6 AS C6
+cmimedatatable.C6 AS C6,
+CONCAT (datatable.imazhi,datatable.KODARTIKULLI,'.jpg') AS IMAZHI
 FROM
 gjendjedatatable
 INNER JOIN datatable ON datatable.KODARTIKULLI = gjendjedatatable.KODARTIKULLI
@@ -133,7 +134,6 @@ $gjendjaDogana = mysqli_fetch_assoc($value2);
             <div class="col-lg-12">
                 <div class="list-group">
   <a href="analizaMag.php" class="list-group-item">Analiza e magazines</a>
-  <a href="perdoruesit.php" class="list-group-item">Menaxhimi i perdoruesve</a>
   <a href="listeCmimesh.php" class="list-group-item">Liste Cmimesh</a>
   <a href="logout.php" class="list-group-item">Logout</a>
 </div>
@@ -143,6 +143,7 @@ $gjendjaDogana = mysqli_fetch_assoc($value2);
 <table class="table table-striped table-bordered table-condensed" id="analizaTable">
     <thead>
         <tr>
+            <th>IMAZH</th>
             <th>KODI</th>
             <th>PERSHKRIMI</th>
             <th>GRUPI</th>
@@ -161,6 +162,7 @@ $gjendjaDogana = mysqli_fetch_assoc($value2);
     </thead>
     <tfoot>
                 <tr>
+            <th>IMAZH</th>
             <th>KODI</th>
             <th>PERSHKRIMI</th>
             <th>GRUPI</th>
@@ -180,7 +182,7 @@ $gjendjaDogana = mysqli_fetch_assoc($value2);
     <tbody>
         <?php
         while($row = mysqli_fetch_array($analiza)){   //Creates a loop to loop through results
-echo "<tr><td>" . $row['KODI'] . "</td><td>" . $row['PERSHKRIMI'] . "</td><td>" . $row['GRUPI'] . "</td><td>" . $row['NENGRUPI'] . "</td><td>" . $row['KODBARI'] . "</td><td>" . $row['Gjendja'] . "</td><td>" . $row['Dogana'] . "</td><td>" . $row['C0'] . "</td><td>" . $row['C1'] . "</td><td>" . $row['C2'] . "</td><td>" . $row['C3'] . "</td><td>" . $row['C4'] . "</td><td>" . $row['C5'] . "</td><td>" . $row['C6'] . "</td></tr>";  //$row['index'] the index here is a field name
+echo "<tr><td><img height='40' width='40' src=". $row['IMAZHI']. "></td><td>" . $row['KODI'] . "</td><td>" . $row['PERSHKRIMI'] . "</td><td>" . $row['GRUPI'] . "</td><td>" . $row['NENGRUPI'] . "</td><td>" . $row['KODBARI'] . "</td><td>" . $row['Gjendja'] . "</td><td>" . $row['Dogana'] . "</td><td>" . $row['C0'] . "</td><td>" . $row['C1'] . "</td><td>" . $row['C2'] . "</td><td>" . $row['C3'] . "</td><td>" . $row['C4'] . "</td><td>" . $row['C5'] . "</td><td>" . $row['C6'] . "</td></tr>";  //$row['index'] the index here is a field name
 }
 ?>
     </tbody>

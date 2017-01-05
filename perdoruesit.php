@@ -1,47 +1,12 @@
 <?php
 include '/database/db.php';
 session_start();
+
 if(!isset($_SESSION['username'])){
     header('Location: login.php');
+
 }
-$analiza = $mysqli->query("SELECT
-datatable.KODARTIKULLI as KODI,
-datatable.PERSHKRIMARTIKULLI AS PERSHKRIMI,
-datatable.GRUPI AS GRUPI,
-datatable.NENGRUPI AS NENGRUPI,
-datatable.KODBARI AS KODBARI,
-Sum(gjendjedatatable.MQ + gjendjedatatable.MK) AS Gjendja,
-gjendjedatatable.MD AS Dogana,
-cmimedatatable.C0 AS C0,
-cmimedatatable.C1 AS C1,
-cmimedatatable.C2 AS C2,
-cmimedatatable.C3 AS C3,
-cmimedatatable.C4 AS C4,
-cmimedatatable.C5 AS C5,
-cmimedatatable.C6 AS C6
-FROM
-gjendjedatatable
-INNER JOIN datatable ON datatable.KODARTIKULLI = gjendjedatatable.KODARTIKULLI
-INNER JOIN cmimedatatable ON datatable.KODARTIKULLI = cmimedatatable.KODARTIKULLI
-GROUP BY gjendjedatatable.KODARTIKULLI");
-
-$value1 = $mysqli->query("SELECT
-Sum(gjendjedatatable.MQ + gjendjedatatable.MK) AS gjendjaTOTALE
-FROM
-gjendjedatatable
-");
-$gjendjaTotale = mysqli_fetch_assoc($value1);
-
-$value2 = $mysqli->query("SELECT
-Sum(gjendjedatatable.MD) AS gjendjaDogana
-FROM
-gjendjedatatable
-");
-
-$gjendjaDogana = mysqli_fetch_assoc($value2);
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -49,29 +14,24 @@ $gjendjaDogana = mysqli_fetch_assoc($value2);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Analiza e magazines</title>
-
+    <title>Perdoruesit</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Bootstrap -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
     <!-- DataTable -->
     <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css">
     <script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/pdfmake-0.1.18/dt-1.10.13/b-1.2.4/b-colvis-1.2.4/b-flash-1.2.4/b-html5-1.2.4/b-print-1.2.4/fc-3.2.2/fh-3.1.2/r-2.1.0/datatables.min.css"/>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/pdfmake-0.1.18/dt-1.10.13/b-1.2.4/b-colvis-1.2.4/b-flash-1.2.4/b-html5-1.2.4/b-print-1.2.4/fc-3.2.2/fh-3.1.2/r-2.1.0/datatables.min.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <scirpt type="text/javascript" src="custom/custom.js" ></scirpt>
   </head>
+
   <body>
    <nav class="navbar navbar-inverse navbar-static-top">
   <div class="container-fluid">
@@ -140,63 +100,91 @@ $gjendjaDogana = mysqli_fetch_assoc($value2);
 
             </div>
             <div class="col-lg-12">
-<table class="table table-striped table-bordered table-condensed" id="analizaTable">
-    <thead>
-        <tr>
-            <th>KODI</th>
-            <th>PERSHKRIMI</th>
-            <th>GRUPI</th>
-            <th>NENGRUPI</th>
-            <th>KODBARI</th>
-            <th>GJENDJA</th>
-            <th>DOGANA</th>
-            <th>C0</th>
-            <th>C1</th>
-            <th>C2</th>
-            <th>C3</th>
-            <th>C4</th>
-            <th>C5</th>
-            <th>C6</th>
-        </tr>
-    </thead>
-    <tfoot>
-                <tr>
-            <th>KODI</th>
-            <th>PERSHKRIMI</th>
-            <th>GRUPI</th>
-            <th>NENGRUPI</th>
-            <th>KODBARI</th>
-            <th><?php echo $gjendjaTotale['gjendjaTOTALE']; ?> <br/> GJEDNJA TOTALE </th>
-            <th> <?php echo $gjendjaDogana['gjendjaDogana']; ?> <br/> DOGANA </th>
-            <th>C0</th>
-            <th>C1</th>
-            <th>C2</th>
-            <th>C3</th>
-            <th>C4</th>
-            <th>C5</th>
-            <th>C6</th>
-        </tr>
-    </tfoot>
-    <tbody>
-        <?php
-        while($row = mysqli_fetch_array($analiza)){   //Creates a loop to loop through results
-echo "<tr><td>" . $row['KODI'] . "</td><td>" . $row['PERSHKRIMI'] . "</td><td>" . $row['GRUPI'] . "</td><td>" . $row['NENGRUPI'] . "</td><td>" . $row['KODBARI'] . "</td><td>" . $row['Gjendja'] . "</td><td>" . $row['Dogana'] . "</td><td>" . $row['C0'] . "</td><td>" . $row['C1'] . "</td><td>" . $row['C2'] . "</td><td>" . $row['C3'] . "</td><td>" . $row['C4'] . "</td><td>" . $row['C5'] . "</td><td>" . $row['C6'] . "</td></tr>";  //$row['index'] the index here is a field name
-}
-?>
-    </tbody>
-</table>
+
+               <button class="btn - btn-default pull pull-right" data-toggle="modal" data-target="#shtoPerdorues" id="shtoPerdoruesModalBtn">
+               <span class="glyphicon glyphicon-plus"></span>  Shto Perdorues</button>
+
+                <table class="table table-striped table-bordered table-condensed" id="userTable">
+                   <br />
+                   <br />
+                   <br />
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Emri</th>
+                            <th>Mbiemri</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Roli</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Emri</th>
+                            <th>Mbiemri</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Roli</th>
+                        </tr>
+                    </tfoot>
+
+                </table>
             </div>
         </div>
     </div>
 
-    <!-- Script executed on the table -->
-    <script>
-    $('#analizaTable').dataTable({
-        dom: 'B<"clear">lfrtip',
-    buttons: [ 'copy', 'csv']
-    } );
-    </script>
+<div class="modal fade" tabindex="-1" role="dialog" id="shtoPerdorues">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Shto Perdorues</h4>
+      </div>
+      <div class="modal-body">
+      <div class="message"></div>
+<div class="form-group">
+ <form action="phpAction/create.php" method="post" id="shtoPerdoruesForm">
+  <div class="form-group">
+    <label for="name">Emri</label>
+    <input type="name" class="form-control" name="firstName" id="firstName" placeholder="Emri">
+  </div>
+   <div class="form-group">
+    <label for="Mbiermi">Mbiemri</label>
+    <input type="name" class="form-control" name="lastName" id="lastName" placeholder="Mbiemri">
+  </div>
+   <div class="form-group">
+    <label for="Username">Username</label>
+    <input type="name" class="form-control" name="userName" id="userName" placeholder="Username">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+  </div>
+  <div class="form-group">
+    <label for="type">Roli</label>
+    <select name="roli" id="type">
+        <option value="">Zgjidhni</option>
+        <option value="Administrator">Administrator</option>
+        <option value="anetar">Anetar</option>
+    </select>
+     </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+      </form>
+      </div><!-- /.form-group -->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
+
+    <!-- Script executed on the table -->
+<script>
+     $("#userTable").dataTable();
+      </script>
+      <script type="text/javascript" src="custom/custom.js"></script>
   </body>
 </html>
-

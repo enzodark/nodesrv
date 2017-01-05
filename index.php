@@ -86,6 +86,8 @@ if(!isset($_SESSION['username'])){
             <div class="col-md-2">
                 <div class="list-group">
   <a href="analizaMag.php" class="list-group-item">Analiza e magazines</a>
+  <a href="perdoruesit.php" class="list-group-item">Menaxhimi i perdoruesve</a>
+  <a href="listeCmimesh.php" class="list-group-item">Liste cmimesh</a>
   <a href="logout.php" class="list-group-item">Logout</a>
 </div>
 
@@ -94,8 +96,8 @@ if(!isset($_SESSION['username'])){
                 <div class="jumbotron">
                       <h1>Hello, <?php echo $_SESSION['firstName'];; ?>!</h1>
                       <p><div class="jumbotron">
-                      <h1>Hello, world!</h1>
-                      <p>...</p>
+                      <h1>Pershendetje!</h1>
+                      <p> Mireseerdhet ne modulin e brendshem te Albamedia </p>
                     </div></p>
 </div>
 
